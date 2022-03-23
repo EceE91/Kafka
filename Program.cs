@@ -42,7 +42,9 @@ namespace KafkaDemo
             _cluster = new ClusterClient(
                 new Configuration
                 {
-                    Seeds = "localhost:9092"
+                    
+                    
+                    Seeds = "b-2.kafkademocluster.pissei.c8.kafka.eu-west-1.amazonaws.com:9092,b-1.kafkademocluster.pissei.c8.kafka.eu-west-1.amazonaws.com:9092"
                 },
                 new ConsoleLogger()
             );
