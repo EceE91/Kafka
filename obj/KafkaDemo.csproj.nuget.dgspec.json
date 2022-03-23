@@ -1,0 +1,84 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/ece.ercan/Downloads/Kafka.Demo-master/KafkaDemo.csproj": {}
+  },
+  "projects": {
+    "/Users/ece.ercan/Downloads/Kafka.Demo-master/KafkaDemo.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/ece.ercan/Downloads/Kafka.Demo-master/KafkaDemo.csproj",
+        "projectName": "KafkaDemo",
+        "projectPath": "/Users/ece.ercan/Downloads/Kafka.Demo-master/KafkaDemo.csproj",
+        "packagesPath": "/Users/ece.ercan/.nuget/packages/",
+        "outputPath": "/Users/ece.ercan/Downloads/Kafka.Demo-master/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/Users/ece.ercan/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://coolblue.myget.org/F/coolblue/auth/8871bb0a-2fda-4925-b1a7-0f22ad07d1ed/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Confluent.Kafka": {
+              "target": "Package",
+              "version": "[1.5.0, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[3.1.6, )"
+            },
+            "kafka-sharp": {
+              "target": "Package",
+              "version": "[1.4.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.8, 3.1.8]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.100/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
