@@ -76,8 +76,7 @@ namespace KafkaDemo
                 _logger = logger;
                 var config = new ProducerConfig
                              {
-                                 //SecurityProtocol = SecurityProtocol.Ssl,
-                                 //SslCaLocation = "",
+                                 SecurityProtocol = SecurityProtocol.Plaintext,
                                  BootstrapServers = "b-2.kafkademocluster.pissei.c8.kafka.eu-west-1.amazonaws.com:9092,b-1.kafkademocluster.pissei.c8.kafka.eu-west-1.amazonaws.com:9092"
                              };
                 _producer = new ProducerBuilder<Null, string>(config).Build();
