@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Confluent.Kafka;
+using Confluent.Kafka.Admin;
 using Kafka.Public;
 using Kafka.Public.Loggers;
 using Microsoft.Extensions.DependencyInjection;
@@ -68,18 +69,40 @@ namespace KafkaDemo
     {
         private readonly ILogger<KafkaProducerHostedService> _logger;
         private readonly IProducer<Null, string> _producer;
+        private readonly string _topicName;
+        private readonly string _bootstrapServers;
 
         public KafkaProducerHostedService(ILogger<KafkaProducerHostedService> logger)
         {
             try
             {
                 _logger = logger;
+                _bootstrapServers = "b-2.kafkademocluster.pissei.c8.kafka.eu-west-1.amazonaws.com:9092,b-1.kafkademocluster.pissei.c8.kafka.eu-west-1.amazonaws.com:9092";
                 var config = new ProducerConfig
                              {
                                  SecurityProtocol = SecurityProtocol.Plaintext,
-                                 BootstrapServers = "b-2.kafkademocluster.pissei.c8.kafka.eu-west-1.amazonaws.com:9092,b-1.kafkademocluster.pissei.c8.kafka.eu-west-1.amazonaws.com:9092"
+                                 BootstrapServers = _bootstrapServers
                              };
                 _producer = new ProducerBuilder<Null, string>(config).Build();
+
+                using var adminClient = new AdminClientBuilder(new AdminClientConfig { BootstrapServers = _bootstrapServers }).Build();
+
+                adminClient.CreateTopicsAsync(
+                    new[]
+                    {
+                        new TopicSpecification
+                        {
+                            Name = _topicName,
+                            ReplicationFactor = 1,
+                            NumPartitions = 1
+                        }
+                    }
+                );
+
+            }
+            catch (CreateTopicsException e)
+            {
+                Console.WriteLine($"An error occured creating topic {e.Results[0].Topic}: {e.Results[0].Error.Reason}");
             }
             catch (Exception e)
             {
@@ -106,7 +129,7 @@ namespace KafkaDemo
                     _logger.LogInformation(message);
                     // ProduceAsync creates a topic if not exists
                     await _producer.ProduceAsync(
-                        "test",
+                        _topicName,
                         new Message<Null, string>
                         {
                             Value = message
