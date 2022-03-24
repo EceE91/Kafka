@@ -70,7 +70,6 @@ namespace KafkaDemo
         private readonly ILogger<KafkaProducerHostedService> _logger;
         private readonly IProducer<Null, string> _producer;
         private readonly string _topicName;
-        private readonly string _bootstrapServers;
 
         public KafkaProducerHostedService(ILogger<KafkaProducerHostedService> logger)
         {
@@ -78,15 +77,17 @@ namespace KafkaDemo
             {
                 _logger = logger;
                 _topicName = "test";
-                _bootstrapServers = "b-2.kafkademocluster.pissei.c8.kafka.eu-west-1.amazonaws.com:9092,b-1.kafkademocluster.pissei.c8.kafka.eu-west-1.amazonaws.com:9092";
+                string bootstrapServers = "b-2.kafkademocluster.pissei.c8.kafka.eu-west-1.amazonaws.com:9092,b-1.kafkademocluster.pissei.c8.kafka.eu-west-1.amazonaws.com:9092";
                 var config = new ProducerConfig
                              {
                                  SecurityProtocol = SecurityProtocol.Plaintext,
-                                 BootstrapServers = _bootstrapServers
+                                 BootstrapServers = bootstrapServers,
+                                 RequestTimeoutMs = 2000,
+                                 MessageTimeoutMs = 5000
                              };
                 _producer = new ProducerBuilder<Null, string>(config).Build();
 
-                using var adminClient = new AdminClientBuilder(new AdminClientConfig { BootstrapServers = _bootstrapServers }).Build();
+                using var adminClient = new AdminClientBuilder(new AdminClientConfig { BootstrapServers = bootstrapServers }).Build();
 
                 adminClient.CreateTopicsAsync(
                     new[]
