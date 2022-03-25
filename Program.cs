@@ -83,9 +83,21 @@ namespace KafkaDemo
                                  SecurityProtocol = SecurityProtocol.Plaintext,
                                  BootstrapServers = bootstrapServers,
                                  RequestTimeoutMs = 2000,
-                                 MessageTimeoutMs = 5000
+                                 MessageTimeoutMs = 5000,
+                                 
+                                 // retry settings:
+                                 // Receive acknowledgement from all sync replicas
+                                 Acks = Acks.All,
+                                 // Number of times to retry before giving up
+                                 MessageSendMaxRetries = 3,
+                                 // Duration to retry before next attempt
+                                 RetryBackoffMs = 1000,
+                                 // Set to true if you don't want to reorder messages on retry
+                                 EnableIdempotence = true
                              };
                 _producer = new ProducerBuilder<Null, string>(config).Build();
+                
+        
 
                 using var adminClient = new AdminClientBuilder(new AdminClientConfig { BootstrapServers = bootstrapServers }).Build();
 
